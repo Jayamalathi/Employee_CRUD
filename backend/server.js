@@ -32,7 +32,6 @@ const User = mongoose.model('User', userSchema);
 
 // Sign Up Route
 app.post('/api/auth/signup', async (req, res) => {
-  console.log(req.body);
   
   const {name,email, password } = req.body;
 
@@ -56,7 +55,7 @@ app.post('/api/auth/signup', async (req, res) => {
 
   try {
     await newUser.save();
-    
+    console.log(req.body);
     res.status(201).json({ message: 'User created successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err });
@@ -66,10 +65,10 @@ app.post('/api/auth/signup', async (req, res) => {
 
 // Login Route
 app.post('/api/auth/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   // Find the user by username
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ email });
   if (!user) {
     return res.status(400).json({ message: 'User not found' });
   }
@@ -87,13 +86,16 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 app.post('/api/createmployee',async(req,res)=>{
-  createEmployee(req,res);
+  createEmployee.createEmployee(req,res);
 });
 
 app.get('/api/displayemployee',async(req,res)=>{
   createEmployee.displayEmployee(req,res)
 })
 
+app.delete('/api/deleteemployee/:id',async(req,res)=>{
+  createEmployee.deleteEmployee(req,res);
+})
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

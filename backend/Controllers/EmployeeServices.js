@@ -1,6 +1,8 @@
 const Employee = require('../models/Employee');
 
 const createEmployee = async (req, res) => {
+    console.log("jaya loosu");
+    
     console.log("Received employee data:", req.body);
     
     // Destructuring data from request body
@@ -16,8 +18,12 @@ const createEmployee = async (req, res) => {
         gender,
         courses
     });
+    console.log(newEmployee);
+
 
     try {
+        console.log(newEmployee);
+        
         // Check if the employee already exists by email (optional)
         const existingEmployee = await Employee.findOne({ email });
         if (existingEmployee) {
@@ -42,12 +48,16 @@ const displayEmployee =  async (req,res)=>{
         const data = await Employee.find();
         res.status(200).json(data)
     } catch (error) {
-        console.log(error);
-        
-        
+        console.log(error);     
     }
         
   
 }
+const deleteEmployee = async (req,res)=>{
+    const {id} = req.params;
+    await Employee.findByIdAndDelete(id);
+    
+    res.status(200).json({message:"Employee deleted successfully"});
+}
 
-module.exports = { createEmployee , displayEmployee }
+module.exports = { createEmployee , displayEmployee,deleteEmployee }

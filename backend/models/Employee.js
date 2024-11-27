@@ -35,7 +35,7 @@ const employeeSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: true,
-    enum: ["M", "F"], // Male or Female
+    enum: ["male", "female"], // Male or Female
   },
   course: {
     type: [String], // Array of strings for multiple selections
